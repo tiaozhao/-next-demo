@@ -4,7 +4,8 @@
       {
         "components": [
           {
-            "/": "/*"
+            "/": "/buy/*",
+            "comment": "Matches any URL with a path that starts with /buy/."
           }
         ],
         "appIDs": ["7U48XSYVC5.com.guitarcenter.mobile.app"]
