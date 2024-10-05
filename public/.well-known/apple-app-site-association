@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "components": [
+          {
+            "/": "/*"
+          }
+        ],
+        "appIDs": ["7U48XSYVC5.com.guitarcenter.mobile.app"]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["7U48XSYVC5.com.guitarcenter.mobile.app"]
+  }
+}
