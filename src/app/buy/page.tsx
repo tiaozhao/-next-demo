@@ -13,7 +13,7 @@ export default function Home() {
     }, 2000);
   
     // 尝试通过 Universal Link 打开 App
-    window.location.href = appLink;
+    window.open(appLink)
   
     // 监听页面可见性，如果用户返回了页面，则清除定时器
     document.addEventListener('visibilitychange', function() {
