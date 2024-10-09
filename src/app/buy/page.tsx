@@ -2,7 +2,7 @@
 export default function Home() {
 
   const handleClick = () => {
-    const appLink = 'https://next-demo-rose-seven.vercel.app/buy';
+    const appLink = 'guitarcenter://buy';
 
     // Fallback URL 指向 App Store
     const fallbackURL = 'https://itunes.apple.com/us/app/guitar-center-shop-new-used/id1173029601';
