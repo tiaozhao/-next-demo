@@ -4,14 +4,12 @@
       {
         "components": [
           {
-            "/": "/*",
-            "comment": "Matches any URL with a path that starts with /buy/."
+            "/": "/",
+            "comment": "Matches the home page URL"
           },
           {
-            "/": "/*",
-            "?": { "openInBrowse": "true" },
-            "exclude": true,
-            "comment": "Matches any URL with a path that starts with /buy/."
+            "/": "/cart",
+            "comment": "Matches the cart page URL"
           }
         ],
         "appIDs": ["7U48XSYVC5.com.guitarcenter.mobile.app"]
