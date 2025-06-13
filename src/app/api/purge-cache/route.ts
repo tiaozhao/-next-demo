@@ -18,37 +18,20 @@ export async function POST(request: Request) {
       }
     );
 
-    if (!response.ok) {
-      // 尝试读取响应文本
-      const text = await response.text();
-      console.error('Vercel API error response:', text);
-      
-      try {
-        // 尝试将响应解析为 JSON
-        const error = JSON.parse(text);
-        return NextResponse.json(
-          { error: 'Failed to purge cache', details: error },
-          { status: response.status }
-        );
-      } catch (e) {
-        // 如果响应不是 JSON 格式，返回文本内容
-        return NextResponse.json(
-          { error: 'Failed to purge cache', message: text },
-          { status: response.status }
-        );
-      }
-    }
-
-    // 尝试读取响应文本
     const text = await response.text();
     console.log('Vercel API response:', text);
 
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: 'Failed to purge cache', message: text },
+        { status: response.status }
+      );
+    }
+
     try {
-      // 尝试将响应解析为 JSON
       const result = JSON.parse(text);
       return NextResponse.json(result);
-    } catch (e) {
-      // 如果响应不是 JSON 格式，返回文本内容
+    } catch {
       return NextResponse.json({
         success: true,
         message: 'Cache purged successfully',
