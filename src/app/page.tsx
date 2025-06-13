@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-export const dynamic = 'force-dynamic';
-
 export default function Home() {
   const currentTime = new Date().toLocaleString();
   
