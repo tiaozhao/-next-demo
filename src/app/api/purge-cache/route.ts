@@ -4,6 +4,29 @@ export async function POST(request: Request) {
   try {
     const { paths } = await request.json();
 
+    // 验证 paths 参数
+    if (!paths || (Array.isArray(paths) && paths.length === 0)) {
+      return NextResponse.json(
+        { error: 'Invalid paths parameter' },
+        { status: 400 }
+      );
+    }
+
+    // 确保 paths 是数组
+    const pathsToPurge = Array.isArray(paths) ? paths : ['/'];
+    
+    // 验证每个路径
+    const validPaths = pathsToPurge.filter(path => 
+      typeof path === 'string' && path.startsWith('/')
+    );
+
+    if (validPaths.length === 0) {
+      return NextResponse.json(
+        { error: 'No valid paths to purge' },
+        { status: 400 }
+      );
+    }
+
     const response = await fetch(
       `https://api.vercel.com/v1/cache/purge`,
       {
@@ -13,7 +36,7 @@ export async function POST(request: Request) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          paths: Array.isArray(paths) ? paths : ['/'],
+          paths: validPaths,
         }),
       }
     );
