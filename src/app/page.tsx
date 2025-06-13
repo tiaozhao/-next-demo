@@ -3,24 +3,15 @@ import Image from "next/image";
 // 强制使用 SSR - 每次请求都在服务器端渲染
 export const dynamic = 'force-dynamic';
 
-// 模拟 getServerSideProps - 这个函数会在每次请求时在服务器端执行
-// async function getServerTime() {
-//   // 这里可以添加任何服务器端的数据获取逻辑
-//   return new Date().toLocaleString();
-// }
-
-export async function getServerSideProps() {
-  // Fetch data from external API
+// 在 App Router 中，我们直接在组件中进行异步数据获取
+async function getServerTime() {
+  // 这里可以添加任何服务器端的数据获取逻辑
   return new Date().toLocaleString();
-
- 
-  // Pass data to the page via props
-  return { props: { time: new Date().toLocaleString() } }
 }
 
 export default async function Home() {
   // 在服务器端获取时间 - 每次请求都会重新获取
-  const currentTime = await getServerSideProps();
+  const currentTime = await getServerTime();
   const renderMode = 'Server-Side Rendering (SSR)';
   
   return (
