@@ -1,13 +1,25 @@
 import Image from "next/image";
 
-export default function Home() {
-  const currentTime = new Date().toLocaleString();
+// 强制使用 SSR
+export const dynamic = 'force-dynamic';
+
+// 模拟 getServerSideProps
+async function getServerTime() {
+  // 这里可以添加任何服务器端的数据获取逻辑
+  return new Date().toLocaleString();
+}
+
+export default async function Home() {
+  // 在服务器端获取时间
+  const currentTime = await getServerTime();
+  const renderMode = 'Server-Side Rendering (SSR)';
   
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="text-sm text-gray-500">
-          Last updated: {currentTime}
+          <div>Render Mode: {renderMode}</div>
+          <div>Last updated: {currentTime}</div>
         </div>
         <h1>On Sale</h1>
         <p>Good News - The Platinum Martin Standard Series D-28 Dreadnought Acoustic Guitar Natural has just dropped in price!</p>

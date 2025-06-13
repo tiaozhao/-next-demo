@@ -32,6 +32,7 @@ export async function POST(request: Request) {
     const results = await Promise.all(
       validPaths.map(async (path) => {
         try {
+          // 这会清除 Next.js 的中间件缓存
           revalidatePath(path);
           return { path, status: 'success' };
         } catch (error) {
@@ -47,7 +48,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: 'Cache revalidation initiated',
-      results
+      results,
+      note: 'Browser cache will expire in 1 minute, middleware cache has been cleared'
     });
 
   } catch (error) {
