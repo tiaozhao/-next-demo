@@ -18,7 +18,6 @@ export async function POST(request: Request) {
       }
     );
 
-    // 首先检查响应状态
     if (!response.ok) {
       // 尝试读取响应文本
       const text = await response.text();
