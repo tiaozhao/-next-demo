@@ -3,6 +3,9 @@ import Image from "next/image";
 // 强制使用 SSR
 export const dynamic = 'force-dynamic';
 
+// 设置中间件缓存时间为 30 天（2592000 秒）
+export const revalidate = 2592000;
+
 // 模拟 getServerSideProps
 async function getServerTime() {
   // 这里可以添加任何服务器端的数据获取逻辑
