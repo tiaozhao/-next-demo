@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(request: Request) {
   try {
@@ -27,42 +28,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch(
-      `https://api.vercel.com/v1/cache/purge`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer Yk7eBYKVU3gZ3lRxJ9OFNJ7g`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          paths: validPaths,
-        }),
-      }
+    // 使用 revalidatePath 重新验证每个路径
+    const results = await Promise.all(
+      validPaths.map(async (path) => {
+        try {
+          revalidatePath(path);
+          return { path, status: 'success' };
+        } catch (error) {
+          return { 
+            path, 
+            status: 'error', 
+            message: error instanceof Error ? error.message : 'Unknown error'
+          };
+        }
+      })
     );
 
-    const text = await response.text();
-    console.log('Vercel API response:', text);
+    return NextResponse.json({
+      success: true,
+      message: 'Cache revalidation initiated',
+      results
+    });
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to purge cache', message: text },
-        { status: response.status }
-      );
-    }
-
-    try {
-      const result = JSON.parse(text);
-      return NextResponse.json(result);
-    } catch {
-      return NextResponse.json({
-        success: true,
-        message: 'Cache purged successfully',
-        response: text
-      });
-    }
   } catch (error) {
-    console.error('Cache purge error:', error);
+    console.error('Cache revalidation error:', error);
     return NextResponse.json(
       { 
         error: 'Internal server error',
