@@ -29,6 +29,7 @@ export async function POST(request: Request) {
     const result = await response.json();
     return NextResponse.json(result);
   } catch (error) {
+    console.error('Cache purge error:', error);
     return NextResponse.json(
       { error: 'Internal server error', details: error },
       { status: 500 }
