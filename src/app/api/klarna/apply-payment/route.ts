@@ -41,10 +41,10 @@ export async function POST(request: NextRequest) {
     console.log('[Klarna] Apply payment orderInfo:', JSON.stringify(orderInfo));
 
     return NextResponse.json({ orderInfo });
-  } catch (error: any) {
+  } catch (error) {
     console.error('[Klarna] Apply payment error:', error);
     return NextResponse.json(
-      { error: error.message },
+      { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

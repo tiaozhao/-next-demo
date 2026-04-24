@@ -82,10 +82,10 @@ export async function POST(request: NextRequest) {
         payment_method_categories: klarnaData.payment_method_categories || [],
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('[Klarna] Create session error:', error);
     return NextResponse.json(
-      { success: false, errorMessage: error.message },
+      { success: false, errorMessage: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

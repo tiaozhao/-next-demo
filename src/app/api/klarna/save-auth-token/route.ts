@@ -84,10 +84,10 @@ export async function POST(request: NextRequest) {
       orderId: klarnaData.order_id,
       fraudStatus: klarnaData.fraud_status,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('[Klarna] Save auth token error:', error);
     return NextResponse.json(
-      { success: false, orderState: 'ERROR', errorMessage: error.message },
+      { success: false, orderState: 'ERROR', errorMessage: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
