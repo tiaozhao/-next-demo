@@ -12,8 +12,7 @@ export async function POST(request: NextRequest) {
     // Build order_lines from real cart data
     const orderAmount = Math.round(paymentAmount * 100); // Convert dollars to cents
 
-    // App scheme URL for mobile SDK callbacks
-    const appReturnUrl = body.returnUrl || 'MusiciansFriendApp://klarna-callback';
+    const confirmationUrl = body.returnUrl || 'https://next-demo-rose-seven.vercel.app/api/klarna/confirmation';
 
     const klarnaBody = {
       purchase_country: 'US',
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
         phone: (shippingAddress.phoneNumber || '5551234567').replace(/\D/g, ''),
       },
       merchant_urls: {
-        confirmation: appReturnUrl,
+        confirmation: confirmationUrl,
         notification: 'https://next-demo-rose-seven.vercel.app/api/klarna/notification',
       },
     };
